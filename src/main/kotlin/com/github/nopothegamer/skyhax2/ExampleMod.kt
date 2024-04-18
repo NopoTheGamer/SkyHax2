@@ -1,11 +1,11 @@
-package com.example
+package com.github.nopothegamer.skyhax2
 
 import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
-@Mod(modid = "examplemod", useMetadata = true)
+@Mod(modid = "skyhax", useMetadata = true)
 class ExampleMod {
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
