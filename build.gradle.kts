@@ -52,6 +52,15 @@ loom {
     }
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+            enableLanguageFeature("BreakContinueInInlineLambdas")
+        }
+    }
+}
+
 tasks.compileJava {
     dependsOn(tasks.processResources)
 }
@@ -75,6 +84,20 @@ val shadowImpl: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
 }
 
+val shadowModImpl: Configuration by configurations.creating {
+    configurations.modImplementation.get().extendsFrom(this)
+}
+
+val runtimeMod by configurations.creating {
+    isTransitive = false
+    isVisible = false
+}
+
+val devenvMod: Configuration by configurations.creating {
+    isTransitive = false
+    isVisible = false
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
@@ -90,7 +113,17 @@ dependencies {
 
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
-
+    modCompileOnly(runtimeMod("com.github.CalMWolfs:SkyHanni:7d71232a9d") {
+        isTransitive = false
+    }!!) { isTransitive = false }
+    devenvMod("com.github.CalMWolfs:SkyHanni:7d71232a9d") {
+        exclude(module = "unspecified")
+        isTransitive = false
+    }
+    modCompileOnly("com.github.CalMWolfs:SkyHanni:7d71232a9d") {
+        exclude(module = "unspecified")
+        isTransitive = false
+    }
 }
 
 // Tasks:
